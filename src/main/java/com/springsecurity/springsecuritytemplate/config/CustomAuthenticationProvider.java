@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Component
@@ -24,9 +25,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        User user = userService.findUserByName(authentication.getName());
+        String encodedCredentials = Base64.getEncoder().encodeToString("username:password".getBytes());
+        System.out.println(encodedCredentials);
         String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
+        User user = userService.findUserByName(authentication.getName());
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
