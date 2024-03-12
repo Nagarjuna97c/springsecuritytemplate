@@ -40,8 +40,7 @@ public class JWTTokenGenerationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        System.out.println(request.getServletPath() + " " + !request.getServletPath().equals("/api/v1/login"));
-        return !request.getServletPath().equals("/user");
+        return !request.getServletPath().equals("/users/login");
     }
 
     private String populateAuthorities(Collection<? extends GrantedAuthority> collection) {

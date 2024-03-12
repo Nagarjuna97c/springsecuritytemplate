@@ -22,8 +22,7 @@ public class UserController {
 
     @PostMapping("/login")
     public User login(Authentication authentication) {
-        User user = userService.getUserByEmail(authentication.getName());
-        return user;
+        return userService.getUserByEmail(authentication.getName());
     }
 
     @GetMapping("/user/{id}")

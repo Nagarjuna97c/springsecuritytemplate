@@ -29,7 +29,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         System.out.println(encodedCredentials);
         String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
-        User user = userService.findUserByName(authentication.getName());
+        User user = userService.getUserByEmail(authentication.getName());
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();

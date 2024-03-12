@@ -1,6 +1,7 @@
 package com.springsecurity.springsecuritytemplate.config;
 
 import com.springsecurity.springsecuritytemplate.filters.JWTTokenGenerationFilter;
+import com.springsecurity.springsecuritytemplate.filters.JWTTokenValidationFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,9 +38,10 @@ public class ProjectSecurityConfig {
                 }
             }))
             .addFilterAfter(new JWTTokenGenerationFilter(), BasicAuthenticationFilter.class)
+            .addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class)
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-//                        .requestMatchers("/login").authenticated()
+                        .requestMatchers("/users/login").permitAll()
                         .requestMatchers("/users/create_user").permitAll()
                         .anyRequest().authenticated()
             )
